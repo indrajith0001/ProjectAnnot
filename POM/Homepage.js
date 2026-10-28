@@ -17,6 +17,7 @@ class Homepage{
         this.verifydashboardopen=page.locator("//span[text()='Open']/following-sibling::span")
         this.verifydashboardresolved=page.locator("//span[text()='Resolved']/following-sibling::span")
         this.verifywebsite=page.locator("//button/descendant::span[text()='Website']")
+        this.signoutbtn=page.locator("//div[@class='relative']/descendant::div/button[contains(text(),'Sign out')]")
 
 
         this.projectnameinp=page.getByPlaceholder("My Website")
@@ -36,9 +37,6 @@ class Homepage{
     }
     //create the project
     async createnewproject(pname, purl){
-            await this.projectsidebar.click()
-            await this.verifyprojectname.waitFor({state: 'visible'})
-            await this.deleteProj()
             await this.addproject.click()
             await expect.soft(this.verifywebsite).toBeVisible()
             await this.projectnameinp.fill(pname)

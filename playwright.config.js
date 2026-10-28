@@ -7,7 +7,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 // import dotenv from 'dotenv';
 // import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env.${xxx}') }); //here to mention the env
+// dotenv.config({ path: path.resolve(__dirname, '.env.${process.env.TEST_ENV || "dev"}') }); //here to mention the env
 
 /**
  * @see https://playwright.dev/docs/test-configuration

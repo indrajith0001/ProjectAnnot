@@ -4,7 +4,7 @@ class ProjectPage{
         this.page=page
         this.cursor=page.getByLabel("Browse")
         this.comment=page.getByLabel("Comment", { exact: true })
-        this.switchview=page.getByLabel("Desktop")
+        this.switchview=page.locator("//span[@role='tooltip']/ancestor::div[@class='relative']/div/span/button")
         this.refreshprojecrt=page.getByLabel("Refresh page")
         this.septab=page.getByLabel("Open in new tab")
         this.viewcomments=page.getByLabel("Comments")
@@ -14,7 +14,7 @@ class ProjectPage{
         this.addcominp=page.getByPlaceholder("Add a comment")
         this.sendcombtn=page.getByLabel("Send")
         this.heading=frame.locator("//div[@data-framer-name='Social Proof Wrapper']");
-        this.projectpreview=page.locator("//img[contains(@alt, 'preview')]")
+        this.projectpreview=page.getByRole('link', { name: 'ProjectCal', exact: true });
         this.commentboxsetting=page.locator("//div[@class='flex shrink-0 items-center gap-2']/div/button")
         this.commentboxdelete=page.locator("//div[@class='flex shrink-0 items-center gap-2']/div/div/button[last()]")
         this.commentboxfinaldel=page.locator("//div[@class='flex min-h-0 flex-col gap-1 overflow-y-auto px-1 pb-1']/descendant::button[last()]")
@@ -34,6 +34,8 @@ class ProjectPage{
         this.moreactionsinsidebar=page.locator("//button[@aria-label='More actions']")
         this.replycommentinsidebar=page.locator("//button[text()='Reply']")
         this.sidebaropenhead=page.locator("//button[text()='Open']")
+        this.systemsizevalue=page.locator("//div[contains(@class,'relative h-full bg-gray-900 ')]/div")
+        this.viewportelements=page.locator("//div[@class='flex flex-col gap-0.5']/button/div")
     }
         async projectcomment(com){
             await this.projectpreview.click()
@@ -41,14 +43,14 @@ class ProjectPage{
             await this.cursor.click()
             await this.heading.waitFor({state: 'visible'})
             const box = await heading.boundingBox();
-            console.log("Box value:", box);
             await this.comment.click()
             await this.page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
             await this.commentcursor.waitFor({state: 'visible'})
-            await this.page.waitForTimeout(3000)
+            await this.page.waitForTimeout(5000)
             await this.page.mouse.down();
             await this.page.mouse.up();
             await this.addcominp.fill(com)
+            await this.page.waitForTimeout(3000)
             await this.sendcombtn.click()
             await this.viewcomments.click()
             await expect.soft(this.verifycomment).toHaveText(com)
