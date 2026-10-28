@@ -1,0 +1,45 @@
+
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Check Node and npm') {
+            steps {
+                bat 'node --version'
+                bat 'npm --version'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'npm ci'
+                bat 'npx playwright install chromium'
+            }
+        }
+
+        stage('Run Playwright Tests') {
+            steps {
+                bat 'npx playwright test'
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts(
+                artifacts: 'playwright-report/**, test-results/**',
+                allowEmptyArchive: true
+            )
+        }
+    }
+}
