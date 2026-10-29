@@ -1,4 +1,4 @@
-import {test, expect} from "../tests/fixture.js"
+import {test, expect} from "../Fixtures/fixture.js"
 import Homepage from "../POM/Homepage.js";
 import Loginpage from "../POM/Loginpage.js";
 import ProjectPage from "../POM/ProjectPage.js";
