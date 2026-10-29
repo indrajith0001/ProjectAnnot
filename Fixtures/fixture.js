@@ -18,8 +18,8 @@ export const test = base.extend({
         await lp.pwdinp.fill(data.password)
         await lp.lgbtn.click()
         await use();
-        await hp.accticon.click()
-        await hp.signoutbtn.click()
+        // await hp.accticon.click()
+        // await hp.signoutbtn.click()
     },
     pom: async ({page}, use) => {
         const lp = new Loginpage(page);
