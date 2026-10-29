@@ -3,8 +3,7 @@ import Loginpage from "../POM/Loginpage.js";
 import Homepage from "../POM/Homepage.js";
 import ProjectPage from "../POM/ProjectPage.js";
 import data from "../TestDatas/Env.json"
-import dotenv, { config } from "dotenv"
-dotenv.config()
+
 
 
 export const test = base.extend({
@@ -12,7 +11,7 @@ export const test = base.extend({
         const lp = new Loginpage(page)
         const hp = new Homepage(page);
         await expect(async () => {
-            await page.goto(process(dev).env.BASE_URL, { waitUntil: 'domcontentloaded' });
+            await page.goto(data.url, { waitUntil: 'domcontentloaded' });
         }).toPass({ intervals: [1_000, 2_000, 5_000], timeout: 30_000 });
         await lp.fullsize()
         await lp.emailinp.fill(data.email)

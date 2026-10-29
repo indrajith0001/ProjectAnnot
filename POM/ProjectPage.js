@@ -13,7 +13,7 @@ class ProjectPage{
         this.backbtn=page.getByLabel("Back")
         this.addcominp=page.getByPlaceholder("Add a comment")
         this.sendcombtn=page.getByLabel("Send")
-        this.heading=frame.locator("//div[@data-framer-name='Social Proof Wrapper']");
+        this.heading=frame.locator("//h1[@data-styles-preset='dBoilDovh']");
         this.projectpreview=page.getByRole('link', { name: 'ProjectCal', exact: true });
         this.commentboxsetting=page.locator("//div[@class='flex shrink-0 items-center gap-2']/div/button")
         this.commentboxdelete=page.locator("//div[@class='flex shrink-0 items-center gap-2']/div/div/button[last()]")
@@ -35,8 +35,14 @@ class ProjectPage{
         this.replycommentinsidebar=page.locator("//button[text()='Reply']")
         this.sidebaropenhead=page.locator("//button[text()='Open']")
         this.systemsizevalue=page.locator("//div[contains(@class,'relative h-full bg-gray-900 ')]/div")
-        this.viewportelements=page.locator("//div[@class='flex flex-col gap-0.5']/button/div")
+        this.viewportelements=page.locator("//div[@class='flex flex-col gap-0.5']/button")
+        this.viewportelementstext=page.locator("//div[@class='flex flex-col gap-0.5']/button/div/span[1]")
+        // this.desktopverifycomments=page.locator("//div[@class='flex flex-col gap-2']/descendant::span[text()='Desktop']/../../div[last()]/descendant::P/span/span")
+        // this.laptopverifycomments=page.locator("//div[@class='flex flex-col gap-2']/descendant::span[text()='Laptop']/../../div[last()]/descendant::P/span/span")
+        // this.tabletverifycomments=page.locator("//div[@class='flex flex-col gap-2']/descendant::span[text()='Tablet']/../../div[last()]/descendant::P/span/span")
+        this.deviceverifycomments= (deviceName)=>this.page.locator(`//div[@class='flex flex-col gap-2']/descendant::span[text()='${deviceName}']/../../div[last()]/descendant::p/span/span`)
     }
+
         async projectcomment(com){
             await this.projectpreview.click()
             const heading = this.heading;
@@ -56,6 +62,7 @@ class ProjectPage{
             await expect.soft(this.verifycomment).toHaveText(com)
             
     }
+
     async clientinteraction(){
         await this.share.click()
         await this.publicaccesstoggle.click()
