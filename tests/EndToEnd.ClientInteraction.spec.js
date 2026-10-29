@@ -7,8 +7,11 @@ import excel from "exceljs"
 import path from "node:path"
 import data from "../TestDatas/Env.json"
 
+test.use({
+  storageState: 'playwright/.auth/user.json'
+});
 
-test.beforeEach(async({page,pom,loginPage})=>{
+test.beforeEach(async({page,pom})=>{
     const hp = pom[1]
     await page.addLocatorHandler(
         page.getByRole('dialog').filter({ hasText: 'Annot 2.0' }),
@@ -16,6 +19,7 @@ test.beforeEach(async({page,pom,loginPage})=>{
         await page.getByRole('button', { name: 'Dismiss launch notice' }).click();
         }
     );
+    await page.goto("https://app.annot.io/dashboard")
     await hp.projectsidebar.click()
     await hp.verifyprojectname.waitFor({state: 'visible'})
     await hp.verifyprojectname.isVisible()
