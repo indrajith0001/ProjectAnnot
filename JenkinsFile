@@ -40,4 +40,18 @@ pipeline {
         
         }
     }
+    pipeline {
+    agent any
+
+    stages {
+        stage('Run Playwright Tests') {
+            steps {
+                bat '''
+                    echo Selected Environment: %TEST_ENV%
+                    npx playwright test
+                '''
+            }
+        }
+    }
+}
 }

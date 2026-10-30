@@ -27,7 +27,7 @@ test.beforeEach(async({page,pom})=>{
     await hp.deletebtn.click()
     await hp.deleteproject.click()
 })
-    test("Client Interaction test", async({loginPage,page,pom})=>{
+    test.only("Client Interaction test", async({loginPage,page,pom})=>{
     test.setTimeout(90_000)
     const lp = pom[0]
     const hp = pom[1]
