@@ -9,17 +9,33 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                script {
-                    echo "Selected Environment: ${params.TEST_ENV}"
-                    def status = bat(script: 'npx playwright test"', returnStatus: true)
+stage('Run Tests') {
+    steps {
+        script {
+            echo "Selected Environment: ${params.TEST_ENV}"
+
+            // Pick the URL for the selected environment
+            def baseUrls = [
+                dev : 'https://app.annot.io/',
+                qa  : 'https://app.annot.io/'
+            ]
+            def baseUrl = baseUrls[params.TEST_ENV] ?: baseUrls['dev']
+
+            withCredentials([usernamePassword(
+                credentialsId: 'app-login',
+                usernameVariable: 'APP_USERNAME',
+                passwordVariable: 'PASSWORD')]) {
+                withEnv(["BASE_URL=${baseUrl}"]) {
+                    def status = bat(script: 'npx playwright test', returnStatus: true)
                     if (status != 0) {
                         echo "Tests failed, but continuing to generate reports..."
+                        currentBuild.result = 'UNSTABLE'
                     }
                 }
             }
         }
+    }
+}
     }
 
     post {
