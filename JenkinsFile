@@ -12,6 +12,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
+                    echo "Selected Environment: ${params.TEST_ENV}"
                     def status = bat(script: 'npx playwright test"', returnStatus: true)
                     if (status != 0) {
                         echo "Tests failed, but continuing to generate reports..."
@@ -36,22 +37,6 @@ pipeline {
                 allowMissing: true,
                 linkRelative: false
             ])
-
-        
         }
     }
-    pipeline {
-    agent any
-
-    stages {
-        stage('Run Playwright Tests') {
-            steps {
-                bat '''
-                    echo Selected Environment: %TEST_ENV%
-                    npx playwright test
-                '''
-            }
-        }
-    }
-}
 }
